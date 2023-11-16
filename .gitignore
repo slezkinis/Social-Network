@@ -5,3 +5,5 @@ __pycache__
 .pytest_cache
 media/avatars
 media/posts
+venv/
+*.sqlite3
