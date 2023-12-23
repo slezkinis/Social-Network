@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, UpdateView
 
@@ -27,6 +27,10 @@ def post_comment_create_and_list_view(request):
     Shows request's user friends.
     View url: /posts/
     """
+    if not request.user.is_authenticated:
+        return redirect('login')
+    if not request.user.profile.is_verificated:
+        return redirect('verificate') 
     qs = Post.objects.get_related_posts(user=request.user)
     profile = get_request_user_profile(request.user)
 
@@ -44,6 +48,8 @@ def post_comment_create_and_list_view(request):
         "profile": profile,
         "p_form": p_form,
         "c_form": c_form,
+        "avatar": request.user.profile.avatar.url,
+        "name": request.user
     }
 
     return render(request, "posts/main.html", context)
@@ -99,9 +105,15 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         messages.add_message(
             self.request,
             messages.SUCCESS,
-            "Post deleted successfully!",
+            "Пост удалён",
         )
         return HttpResponseRedirect(self.success_url)
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDeleteView, self).get_context_data(**kwargs)
+        context['name'] = self.request.user
+        context['avatar'] = self.request.user.profile.avatar.url
+        return context
 
 
 class CommentDeleteView(LoginRequiredMixin, DeleteView):
@@ -130,7 +142,7 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView):
         messages.add_message(
             self.request,
             messages.SUCCESS,
-            "Comment deleted successfully!",
+            "Комментарий удалён",
         )
         return redirect_back(self.request)
 
@@ -164,6 +176,12 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         messages.add_message(
             self.request,
             messages.SUCCESS,
-            "Post updated successfully!",
+            "Пост изменён",
         )
         return HttpResponseRedirect(self.success_url)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['name'] = self.request.user
+        context['avatar'] = self.request.user.profile.avatar.url
+        return context

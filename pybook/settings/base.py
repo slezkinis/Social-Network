@@ -15,8 +15,15 @@ SECRET_KEY = os.environ.get("APP_SECRET", 'replace_me')
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://*']
-
+CSRF_TRUSTED_ORIGINS = ['https://7392-109-252-26-168.ngrok-free.app']
+LOGOUT_REDIRECT_URL = '/'
+EMAIL_HOST = 'smtp.beget.com'
+EMAIL_HOST_USER = 'register@slezkinis.ru'
+EMAIL_HOST_PASSWORD = 'Iv@nKRegistr1'
+EMAIL_PORT = 25
+DEFAULT_FROM_EMAIL = 'register@slezkinis.ru'
+EMAIL_USE_TLS = False
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Application definition
 
@@ -28,13 +35,15 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    'account.apps.AccountConfig',
     # Apps
     "profiles",
     "posts",
+    # "account"
     # Django All-Auth
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
+    # "allauth",
+    # "allauth.account",
+    # "allauth.socialaccount",
 ]
 
 SITE_ID = 1
@@ -45,8 +54,8 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_UNIQUE = True
 
-if DEBUG:
-    EMAIL_BACKEND = "django.core.mail.backends.dummy.EmailBackend"
+# if DEBUG:
+#     EMAIL_BACKEND = "django.core.mail.backends.dummy.EmailBackend"
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
@@ -58,7 +67,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'allauth.account.middleware.AccountMiddleware'
 ]
 
 ROOT_URLCONF = "pybook.urls"
@@ -83,7 +91,6 @@ TEMPLATES = [
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
 WSGI_APPLICATION = "pybook.wsgi.application"
@@ -122,9 +129,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Moscow"
 
 USE_I18N = True
 

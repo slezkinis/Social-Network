@@ -1,20 +1,70 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block title %}
-    Delete Post
+    Удаление
 {% endblock title %}
-{% block content %}
-    <div id="content-container" class="container p-none">
-        <div class="side-p">
-            <h3>Are you sure?</h3>
-            <p>You're about to delete "{{ object }}". Please confirm.</p>
-            <form action="" method="post">
-                {% csrf_token %}
-                <input class="ui button"
-                       type="button"
-                       value="Cancel"
-                       onclick="window.history.go(-1);"/>
-                <input class="ui button positive" type="submit" value="Confirm" />
+{% block body %}
+<body>
+  <header class="header" role="banner" style="z-index: 1000000;">
+    <h1 class="logo">
+      <a href="/">IvanK</a>
+    </h1>
+    <div class="nav-wrap">
+      <nav class="main-nav" role="navigation">
+        <ul class="unstyled list-hover-slide">
+          <li>
+            <a href="{% url 'profiles:my-profile-view' %}">
+              <img src="{{avatar}}" width="100px" height="100px"/>
+              <br>
+              <br>
+              <p>{{name}}</p>
+            </a>
+          </li>
+          <li>
+            <form class="search" action="{% url 'profiles:search-profiles-view' %}">
+                <label class="search__label" for="search">Поиск</label>
+                <div class="search__input-wrap">
+                    <input class="search__input" type="text" name="q" placeholder="Search for profiles...">
+                    <button class="search__button" type="submit" aria-label="Search">
+                        <svg class="search__icon" viewBox="0 0 36 36" width="36px" height="36px" aria-hidden="true">
+                            <g class="search__icon-g" stroke="currentcolor" stroke-linecap="round" stroke-width="4" transform="translate(6,6)">
+                                <ellipse class="search__icon-ellipse" fill="none" cx="9" cy="9" rx="7" ry="7" transform="rotate(45,9,9)" />
+                                <line class="search__icon-line1" x1="15" y1="15" x2="21" y2="21" />
+                                <line class="search__icon-line2" x1="21" y1="21" x2="15" y2="15" />
+                                <line class="search__icon-line3" x1="21" y1="21" x2="15" y2="15" />
+                            </g>
+                        </svg>
+                    </button>
+                </div>
             </form>
-        </div>
-    </div>
-{% endblock content %}
+          </li>
+          <li><a href="{% url 'posts:main-post-view' %}">Посты</a></li>
+          <li><a href="{% url 'profiles:messenger-list-view'%}">Мессенджер</a></li>
+          <li><a href="{% url 'profiles:my-friends-view' %}">Друзья</a></li>
+          <ul class="social-links list-inline unstyled list-hover-slide">
+            <li><a href="{% url 'profiles:sent-invites-view' %}">Приглашения от вас</a></li>
+            <li><a href="{% url 'profiles:received-invites-view' %}">Приглашения вам</a></li>
+          </ul>
+          <li><a href='{% url "logout" %}'>Выйти</a></li>
+        </ul>
+      </nav>
+</header>
+    <main style="margin-left: 18%; margin-top: 1%; color: rgb(205, 144, 58)">
+        <h1 style="font-weight: 1000; color: rgb(255, 149, 0)">Ты уверен?</h1>
+        <h3>Ты уверен, что хочешь удалить пост?</h3>
+        <form method="post" action="">
+          <div style="height: 10%">
+            <!-- <button class="btn-hover color-8" style="margin-left: -1%;"><a href="index.html" style="color: white;">Cancel</a></button> -->
+            <input class="btn-hover color-8"
+               type="button"
+               value="Отмена"
+               onclick="window.history.go(-1);"/>
+               <!-- <button class="btn-hover color-8" style="margin-left: -1%;">123</button> -->
+            <button class="btn-hover color-11" type="submit">Удалить</button>
+          </div>
+          {% csrf_token %}
+        </form>
+    </main>
+</body>
+
+</html>
+{% endblock body %}

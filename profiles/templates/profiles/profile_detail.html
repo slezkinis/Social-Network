@@ -1,8 +1,71 @@
 {% extends 'base.html' %}
 {% block title %}
-    {{ profile.user }}
+    My Profile
 {% endblock title %}
-{% block content %}
+{% load static %}
+{% block body %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- Custom CSS-->
+    <link rel="stylesheet"
+            type="text/css"
+            href="{% static 'style.css' %}"
+            --
+            Custom
+            JS
+            -->
+    <script type="text/javascript" src={% static 'main.js' %} defer></script>
+    <!-- Semantic UI -->
+    <link rel="stylesheet"
+            type='text/css'
+            href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+<body  style="background-color: #001219;">
+    <header class="header" role="banner" style="z-index: 1000000;">
+        <h1 class="logo">
+          <a href="/">IvanK</a>
+        </h1>
+        <div class="nav-wrap">
+          <nav class="main-nav" role="navigation">
+            <ul class="unstyled list-hover-slide">
+              <li>
+                <a href="{% url 'profiles:my-profile-view' %}">
+                  <img src="{{avatar}}" width="100px" height="100px"/>
+                  <br>
+                  <br>
+                  <p>{{name}}</p>
+                </a>
+              </li>
+              <li>
+                <form class="search" action="{% url 'profiles:search-profiles-view' %}">
+                    <label class="search__label" for="search">Поиск</label>
+                    <div class="search__input-wrap">
+                        <input class="search__input" type="text" name="q" placeholder="Search for profiles...">
+                        <button class="search__button" type="submit" aria-label="Search">
+                            <svg class="search__icon" viewBox="0 0 36 36" width="36px" height="36px" aria-hidden="true">
+                                <g class="search__icon-g" stroke="currentcolor" stroke-linecap="round" stroke-width="4" transform="translate(6,6)">
+                                    <ellipse class="search__icon-ellipse" fill="none" cx="9" cy="9" rx="7" ry="7" transform="rotate(45,9,9)" />
+                                    <line class="search__icon-line1" x1="15" y1="15" x2="21" y2="21" />
+                                    <line class="search__icon-line2" x1="21" y1="21" x2="15" y2="15" />
+                                    <line class="search__icon-line3" x1="21" y1="21" x2="15" y2="15" />
+                                </g>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+              </li>
+              <li><a href="{% url 'posts:main-post-view' %}">Посты</a></li>
+              <li><a href="{% url 'profiles:messenger-list-view'%}">Мессенджер</a></li>
+              <li><a href="{% url 'profiles:my-friends-view' %}">Друзья</a></li>
+              <ul class="social-links list-inline unstyled list-hover-slide">
+                <li><a href="{% url 'profiles:sent-invites-view' %}">Приглашения от вас</a></li>
+                <li><a href="{% url 'profiles:received-invites-view' %}">Приглашения вам</a></li>
+              </ul>
+              <li><a href='{% url "logout" %}'>Выйти</a></li>
+            </ul>
+          </nav>
+    </header>
+<main style="margin-left: 20%; background-color: #001219;">
+    <br>
     {% for message in messages %}
         {% if message.tags == 'error' %}
             <div class="ui red message">
@@ -16,39 +79,41 @@
             </div>
         {% endif %}
     {% endfor %}
+
+    <!-- Modal End -->
     <div class='ui grid'>
         <br>
         <div class='row'>
             <div class='four wide column'>
                 <img class='ui medium rounded image' src='{{ profile.avatar.url }}'>
-                <h1>{{ profile.user }}</h1>
+                <h1 style="color: rgb(167, 114, 2)">{{ profile.user }}</h1>
                 <div class='ui vertical fluid menu'>
                     <div class='item'>
-                        Posts
+                        Посты
                         <div class='ui label'>{{ profile.posts.all.count }}</div>
                     </div>
                     <div class='item'>
-                        Likes Given
+                        Поставил лайков
                         <div class='ui label'>{{ profile.get_likes_given_count }}</div>
                     </div>
                     <div class='item'>
-                        Likes Received
+                        Получил лайков
                         <div class='ui label'>{{ profile.get_likes_received_count }}</div>
                     </div>
                     <div class='item'>
-                        Friends
+                        Друзья
                         <div class='ui label'>{{ profile.friends.all.count }}</div>
                     </div>
                     <div class='item'>
-                        Followers
+                        Подписчики
                         <div class='ui label'>{{ profile.followers.all.count }}</div>
                     </div>
                 </div>
-                <div>
+                <div style="margin-top: -0.4%; display: block">
                     <!-- Relationship Options (add friend, remove etc.)-->
                     <!-- Add Friend -->
                     <!-- If request user didn't send invite and pk user didn't send invite and request's user not in target user friends -->
-                    {% if profile.user not in invited_users and profile.user not in incoming_invite_users and request.user not in profile.friends.all %}
+                    {% if profile.user not in invited_users and profile.user not in incoming_invite_users and request.user not in profile.friends.all and prodile.user != request.user%}
                         <form action='{% url 'profiles:send-invite' %}' method='POST'>
                             {% csrf_token %}
                             <input type='hidden' name='pk' value='{{ profile.pk }}'>
@@ -57,7 +122,7 @@
                                     type='submit'
                                     class='ui positive basic button mb-5 w-big'>
                                 <i class='plus square icon'></i>
-                                Add Friend
+                                Добавить друга
                             </button>
                         </form>
                     {% endif %}
@@ -69,7 +134,7 @@
                                            width:200px"
                                     class='ui disabled button mb-5 w-big'>
                                 <i class='user icon'></i>
-                                Waiting for approval
+                                Запрос отправлен
                             </button>
                         </div>
                     {% endif %}
@@ -84,7 +149,7 @@
                                     type='submit'
                                     class='ui positive basic button mb-5 w-big'>
                                 <i class='plus square icon'></i>
-                                Accept Invite
+                                Принять приглашение
                             </button>
                         </form>
                     {% endif %}
@@ -99,7 +164,7 @@
                                     type='submit'
                                     class='ui negative basic button mb-5 w-big'>
                                 <i class='minus square icon'></i>
-                                Remove Friend
+                                Удалить из друзей
                             </button>
                         </form>
                     {% endif %}
@@ -111,7 +176,7 @@
                             <button style="margin-top:10px;
                                            width:200px"
                                     type='submit'
-                                    class='ui positive basic button mb-5 w-big'>Follow</button>
+                                    class='ui positive basic button mb-5 w-big'>Подписаться</button>
                         </form>
                         <!-- Unfollow -->
                     {% else %}
@@ -122,7 +187,7 @@
                                            width:200px"
                                     type='submit'
                                     class='ui negative basic button mb-5 w-big'>
-                                Unfollow
+                                Отписаться
                             </button>
                         </form>
                     {% endif %}
@@ -133,20 +198,20 @@
                                            width:200px"
                                     type='submit'
                                     class='ui info teal basic button mb-5 w-big'>
-                                Send a Message
+                                Открыть чат
                             </button>
                         </a>
                     {% endif %}
                 </div>
-                <!-- Relationship Options end -->
-            </div>
+                </div>
+                
             <div class='twelve wide column'>
                 {% if posts %}
                     {% for post in posts  %}
                         <div class='segment ui fluid'>
                             <div class="post-content">
-                                <h3>Post #{{ forloop.revcounter }}</h3>
-                                <p style="color: gray">{{ post.created|timesince }} ago</p>
+                                <h3>Пост #{{ forloop.revcounter }}</h3>
+                                <p style="color: gray">{{ post.created|timesince }} назад</p>
                                 <hr>
                             </div>
                             {% if post.image %}
@@ -166,7 +231,7 @@
                                       id='{{ post.id }}'>
                                     {% csrf_token %}
                                     <input type="hidden" name="post_id" value={{ post.id }}>
-                                    {% if request_user_profile not in post.liked.all %}
+                                    {% if profile not in post.liked.all %}
                                         <button type="submit" class="ui button black like-btn{{ post.id }}">
                                             <i class="heart icon"></i>
                                             <p style="display: inline-block;" class="like-count{{ post.id }}">{{ post.liked.all.count }}</p>
@@ -185,9 +250,9 @@
                                     {% for c in post.comment_set.all %}
                                         <div class="ui segment mb-5">
                                             <img class="ui avatar image" src={{ c.profile.avatar.url }}>
-                                            <span style="color:gray">
-                                                <a style="color:black" href="{{ c.profile.get_absolute_url }}">{{ c.profile }}</a> {{ c.created|timesince }} ago
-                                            </span>
+                                            <p style="color:gray">
+                                                <a style="color:black" href="{{ c.profile.get_absolute_url }}">{{ c.profile }}</a> {{ c.created|timesince }} назад
+                                            </p>
                                             <div style="color:black" class='mt-5'>{{ c.content }}</div>
                                             <br>
                                             {% if c.profile.user == request.user %}
@@ -200,24 +265,23 @@
                                     {% endfor %}
                                 {% endif %}
                             </div>
-                            <form action="" method="POST"class='form{{ post.id }} ui fluid form'>
+                            <form action="{% url 'posts:main-post-view' %}" method="POST"class='form{{ post.id }} ui fluid form'>
                                 {% csrf_token %}
                                 <input type="hidden" name="post_id" value={{ post.id }}>
-                                {{ form.as_p }}
+                                {{ c_form.as_p }}
                                 <button type="submit"
                                         name="submit_c_form"
-                                        class="ui primary button mt-5 w-full">Send</button>
+                                        class="ui primary button mt-5 w-full">Опубликовать</button>
                             </form>
-                        {% endfor %}
-                    {% else %}
-                        <h1>This user hasn't posted anything yet.</h1>
-                    {% endif %}
-                </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h1>Постов нет</h1>
+                {% endif %}
             </div>
         </div>
-    {% endblock content %}
-    {% block scripts %}
-        {% load static %}
-        <script src="{% static 'like.js' %}"></script>
-        <script src="{% static 'comments.js' %}"></script>
-    {% endblock scripts %}
+        </div>
+    </main>
+</body>
+</html>
+{% endblock body %}

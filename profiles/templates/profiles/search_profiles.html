@@ -1,36 +1,117 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block title %}
-    Search
+    Приглашения в друзья
 {% endblock title %}
-{% block content %}
-    {% if search %}
-        {% if profiles %}
-            <h1>Showing profiles for result "{{ search }}"</h1>
-            <br>
-            {% for profile in profiles %}
-                <div class='ui segment'>
-                    <div class='ui grid'>
-                        <div class='row'>
-                            <div class='three wide column'>
-                                <img class='ui small circular image' src='{{ profile.avatar.url }}'>
-                            </div>
-                            <div class='thirteen wide column'>
-                                <h3>{{ profile.user }}</h3>
-                                <p>{{ profile.bio }}</p>
-                                <a href='{{ profile.get_absolute_url }}'>
-                                    <button style="margin-top:10px;
-                                                   width:200px"
-                                            class='ui primary button mb-5 w-big'>See Profile</button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+{% block body %}
+<body>
+  <header class="header" role="banner" style="z-index: 1000000;">
+    <h1 class="logo">
+      <a href="/">IvanK</a>
+    </h1>
+    <div class="nav-wrap">
+      <nav class="main-nav" role="navigation">
+        <ul class="unstyled list-hover-slide">
+          <li>
+            <a href="{% url 'profiles:my-profile-view' %}">
+              <img src="{{avatar}}" width="100px" height="100px"/>
+              <br>
+              <br>
+              <p>{{name}}</p>
+            </a>
+          </li>
+          <li>
+            <form class="search" action="{% url 'profiles:search-profiles-view' %}">
+                <label class="search__label" for="search">Поиск</label>
+                <div class="search__input-wrap">
+                    <input class="search__input" type="text" name="q" placeholder="Search for profiles...">
+                    <button class="search__button" type="submit" aria-label="Search">
+                        <svg class="search__icon" viewBox="0 0 36 36" width="36px" height="36px" aria-hidden="true">
+                            <g class="search__icon-g" stroke="currentcolor" stroke-linecap="round" stroke-width="4" transform="translate(6,6)">
+                                <ellipse class="search__icon-ellipse" fill="none" cx="9" cy="9" rx="7" ry="7" transform="rotate(45,9,9)" />
+                                <line class="search__icon-line1" x1="15" y1="15" x2="21" y2="21" />
+                                <line class="search__icon-line2" x1="21" y1="21" x2="15" y2="15" />
+                                <line class="search__icon-line3" x1="21" y1="21" x2="15" y2="15" />
+                            </g>
+                        </svg>
+                    </button>
                 </div>
-            {% endfor %}
-        {% else %}
-            <h1>No Profiles found.</h1>
-        {% endif %}
-    {% else %}
-        <h1>To use Search type text into the Search bar</h1>
+            </form>
+          </li>
+          <li><a href="{% url 'posts:main-post-view' %}">Посты</a></li>
+          <li><a href="{% url 'profiles:messenger-list-view'%}">Мессенджер</a></li>
+          <li><a href="{% url 'profiles:my-friends-view' %}">Друзья</a></li>
+          <ul class="social-links list-inline unstyled list-hover-slide">
+            <li><a href="{% url 'profiles:sent-invites-view' %}">Приглашения от вас</a></li>
+            <li><a href="{% url 'profiles:received-invites-view' %}">Приглашения вам</a></li>
+          </ul>
+          <li><a href='{% url "logout" %}'>Выйти</a></li>
+        </ul>
+      </nav>
+</header>
+  <h1 style="color: rgb(205, 144, 58); margin-left: 17%;">Результаты поиска</h1>
+  {% if not profiles %}<h1 style="color: rgb(205, 144, 58); text-align:center">Ничего не найдено(</h1>{% endif %}
+  {% for profile in profiles %}
+  <div class="border_2">
+    <div style="margin-left: 0.5%; margin-top: 0.3%;  width: 30%; display: flex;;">
+        <img src="{{ profile.avatar.url }}" style="width: 23%; height: 95%; display: inline-block; border: 4px rgb(248, 148, 9)  solid;">
+        <div style="margin-left: 2%;">
+            <h2 style="color: rgb(205, 144, 58); display: inline-block;">{{ profile.user }}</h2>
+            <h3 style="color: rgb(205, 144, 58); display: block;">{{profile.bio}}</h3>
+        </div>
+    </div>
+    <form action="{{ profile.get_absolute_url }}" id="1">
+    </form>
+    {% if profile.user not in invited_users and profile.user not in incoming_invite_users and request.user not in profile.friends.all and profile.user != request.user %}
+        <form action='{% url 'profiles:send-invite' %}' id="2" method='POST'>
+            {% csrf_token %}
+            <input type='hidden' name='pk' value='{{ profile.pk }}'>
+        </form>
     {% endif %}
-{% endblock content %}
+    {% if profile.user in incoming_invite_users and profile.user not in invited_users %}
+        <form action='{% url 'profiles:accept-invite' %}' id="3" method='POST'>
+            {% csrf_token %}
+            <input type='hidden' name='pk' value='{{ profile.pk }}'>
+        </form>
+    {% endif %}
+    {% if request.user in profile.friends.all %}
+        <form action='{% url 'profiles:remove-friend' %}' id="4" method='POST'>
+            {% csrf_token %}
+            <input type='hidden' name='pk' value='{{ profile.pk }}'>
+        </form>
+    {% endif %}
+    {% if profile.user not in following %}
+        <form action='{% url "profiles:switch-follow-view" %}' id="5" method='POST'>
+            {% csrf_token %}
+            <input type='hidden' name='pk' value='{{ profile.pk }}'>
+        </form>
+        <!-- Unfollow -->
+    {% else %}
+        <form action='{% url "profiles:switch-follow-view" %}' id="6" method='POST'>
+            {% csrf_token %}
+            <input type='hidden' name='pk' value='{{ profile.pk }}'>
+        </form>
+    {% endif %}
+    <div style="display: flex; width: 80%; justify-content: right; height: 100%; vertical-align: center; align-items: center;">
+      <button class="btn-hover color-1" style="align-items: center;" form="1">Профиль</button>
+        {% if profile.user not in invited_users and profile.user not in incoming_invite_users and request.user not in profile.friends.all and profile.user != request.user%}
+          <button type="submit" form="2" class="btn-hover color-6">Добавить в друзья</button>
+        {% endif %}
+        {% if profile.user in incoming_invite_users and profile.user not in invited_users %}
+          <button type="submit" form="3" class="btn-hover color-6">Принять</button>
+        {% endif %}
+        {% if request.user in profile.friends.all %}
+          <button type="submit" form="4" class="btn-hover color-11">Удалить из друзей</button>
+        {% endif %}
+        {% if profile.user not in following %}
+          <button type="submit" form="5" class="btn-hover color-6">Подписаться</button>
+        {% else %}
+          <button type="submit" form="6" class="btn-hover color-11">Отписаться</button>
+        {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+    </main>
+</body>
+
+</html>
+{% endblock body %}

@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.shortcuts import reverse
+from django.utils import timezone
 
 from .models_utils import get_likes_received_count, get_list_of_profiles_by_user
 
@@ -23,9 +24,11 @@ class Profile(models.Model):
 
     first_name = models.CharField(max_length=200, blank=True)
     last_name = models.CharField(max_length=200, blank=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     bio = models.TextField(default="No Bio..", max_length=300, blank=True)
-    email = models.EmailField(max_length=200, blank=True)
+    code = models.IntegerField('Проверочный код', blank=True, null=True)
+    is_verificated = models.BooleanField('Подтверждение аккаунта', blank=True, null=True, default=False)
+    last_generated_code = models.TimeField('Последняя генерация кода', blank=True, null=True)
     country = models.CharField(max_length=200, blank=True)
     avatar = models.ImageField(
         default="avatar.png",
@@ -145,7 +148,6 @@ class Message(models.Model):
     )
     content = models.TextField(max_length=200)
 
-    updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

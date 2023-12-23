@@ -12,7 +12,7 @@ class PostCreateModelForm(forms.ModelForm):
 
 
 class PostUpdateModelForm(forms.ModelForm):
-    content = forms.CharField(widget=forms.Textarea(attrs={"rows": 2}))
+    content = forms.CharField(widget=forms.Textarea(attrs={"width" : "99%", "resize": "vertical", "margin-left": "0.5%"}))
 
     class Meta:
         model = Post

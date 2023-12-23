@@ -1,58 +1,84 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block title %}
-    Received Invites
+    Приглашения в друзья
 {% endblock title %}
-{% block content %}
-    <div class="ui two top attached buttons">
-        <a href="{% url 'profiles:received-invites-view' %}">
-            <div class="ui button active">Received Invites</div>
-        </a>
-        <a href="{% url 'profiles:sent-invites-view' %}">
-            <div class="ui button">Sent Invites</div>
-        </a>
-    </div>
-    {% if not profiles %}<h1>You haven't received any invites yet.</h1>{% endif %}
-    {% for profile in profiles %}
-        <div class='ui segment'>
-            <div class='ui grid'>
-                <div class='row'>
-                    <div class='three wide column'>
-                        <img class='ui small circular image' src='{{ profile.avatar.url }}'>
-                    </div>
-                    <div class='thirteen wide column'>
-                        <h3>{{ profile.user }}</h3>
-                        <p>{{ profile.bio }}</p>
-                        <br>
-                        <a href='{{ profile.get_absolute_url }}'>
-                            <button style="margin-top:10px;
-                                           width:200px"
-                                    class="ui primary button w-big mb-5">See Profile</button>
-                        </a>
-                        <form action='{% url 'profiles:accept-invite' %}' method='POST'>
-                            {% csrf_token %}
-                            <input type='hidden' name='pk' value='{{ profile.pk }}'>
-                            <button style="margin-top:10px;
-                                           width:200px"
-                                    type='submit'
-                                    class='ui positive basic button w-big mb-5'>
-                                <i class='check icon'></i>
-                                Accept Invite
-                            </button>
-                        </form>
-                        <form action='{% url 'profiles:reject-invite' %}' method='POST'>
-                            {% csrf_token %}
-                            <input type='hidden' name='pk' value='{{ profile.pk }}'>
-                            <button style="margin-top:10px;
-                                           width:200px"
-                                    type='submit'
-                                    class='ui negative basic button w-big mb-5'>
-                                <i class='close icon'></i>
-                                Reject Invite
-                            </button>
-                        </form>
-                    </div>
+{% block body %}
+<body>
+  <header class="header" role="banner" style="z-index: 1000000;">
+    <h1 class="logo">
+      <a href="/">IvanK</a>
+    </h1>
+    <div class="nav-wrap">
+      <nav class="main-nav" role="navigation">
+        <ul class="unstyled list-hover-slide">
+          <li>
+            <a href="{% url 'profiles:my-profile-view' %}">
+              <img src="{{avatar}}" width="100px" height="100px"/>
+              <br>
+              <br>
+              <p>{{name}}</p>
+            </a>
+          </li>
+          <li>
+            <form class="search" action="{% url 'profiles:search-profiles-view' %}">
+                <label class="search__label" for="search">Поиск</label>
+                <div class="search__input-wrap">
+                    <input class="search__input" type="text" name="q" placeholder="Search for profiles...">
+                    <button class="search__button" type="submit" aria-label="Search">
+                        <svg class="search__icon" viewBox="0 0 36 36" width="36px" height="36px" aria-hidden="true">
+                            <g class="search__icon-g" stroke="currentcolor" stroke-linecap="round" stroke-width="4" transform="translate(6,6)">
+                                <ellipse class="search__icon-ellipse" fill="none" cx="9" cy="9" rx="7" ry="7" transform="rotate(45,9,9)" />
+                                <line class="search__icon-line1" x1="15" y1="15" x2="21" y2="21" />
+                                <line class="search__icon-line2" x1="21" y1="21" x2="15" y2="15" />
+                                <line class="search__icon-line3" x1="21" y1="21" x2="15" y2="15" />
+                            </g>
+                        </svg>
+                    </button>
                 </div>
-            </div>
+            </form>
+          </li>
+          <li><a href="{% url 'posts:main-post-view' %}">Посты</a></li>
+          <li><a href="{% url 'profiles:messenger-list-view'%}">Мессенджер</a></li>
+          <li><a href="{% url 'profiles:my-friends-view' %}">Друзья</a></li>
+          <ul class="social-links list-inline unstyled list-hover-slide">
+            <li><a href="{% url 'profiles:sent-invites-view' %}">Приглашения от вас</a></li>
+            <li><a href="{% url 'profiles:received-invites-view' %}">Приглашения вам</a></li>
+          </ul>
+          <li><a href='{% url "logout" %}'>Выйти</a></li>
+        </ul>
+      </nav>
+</header>
+    <main>
+        <h1 style="color: rgb(205, 144, 58); margin-left: 17%;">Полученные приглашения в друзья</h1>
+        {% if not profiles %}<h2 style="color: rgb(205, 144, 58); margin-left: 17%;">Здесь будут показаны полученные приглашения в друзья</h2>{% endif %}
+        {% for profile in profiles %}
+        <div class="border_2">
+          <div style="margin-left: 0.5%; margin-top: 0.3%;  width: 30%; display: flex;;">
+              <img src="{{ profile.avatar.url }}" style="width: 23%; height: 95%; display: inline-block; border: 4px rgb(248, 148, 9)  solid;">
+              <div style="margin-left: 2%;">
+                  <h2 style="color: rgb(205, 144, 58); display: inline-block;">{{ profile.user }}</h2>
+                  <h3 style="color: rgb(205, 144, 58); display: block;">{{profile.bio}}</h3>
+              </div>
+          </div>
+          <form action="{{ profile.get_absolute_url }}" id="1">
+          </form>
+          <form action='{% url 'profiles:accept-invite' %}' method='POST' id="2">
+            {% csrf_token %}
+            <input type='hidden' name='pk' value='{{ profile.pk }}'>
+          </form>
+          <form action='{% url 'profiles:reject-invite' %}' method='POST' id="3">
+            {% csrf_token %}
+            <input type='hidden' name='pk' value='{{ profile.pk }}'>
+          </form>
+          <div style="display: flex; width: 80%; justify-content: right; height: 100%; vertical-align: center; align-items: center;">
+            <button class="btn-hover color-1" style="align-items: center;" form="1">Перейти в профиль</button>
+            <button type="submit" form="2" class="btn-hover color-6">Принять</button>
+            <button type="submit" form="3" class="btn-hover color-11">Отклонить</button>
+          </div>
         </div>
-    {% endfor %}
-{% endblock content %}
+        {% endfor %}
+    </main>
+</body>
+
+</html>
+{% endblock body %}

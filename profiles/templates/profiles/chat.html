@@ -1,40 +1,103 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block title %}
-    Chat
+    Чат с {{friend_name}}
 {% endblock title %}
-{% block content %}
-    <meta http-equiv="refresh" content="10">
-    <h3 style="text-align: center">Chat with {{ profile }}</h3>
-    {% if are_friends %}
-        <form action="" method="POST" class='ui fluid form'>
-            {% csrf_token %}
-            {{ form.as_p  }}
-            <button type="submit" class="ui primary button mt-5 w-full">Send</button>
-        </form>
-        <br>
-        {% if not qs %}<h1 style="text-align: center">{{ profile|capfirst }} is waiting for your first message!</h1>{% endif %}
-        {% for message in qs %}
-            {% if message in received %}
-                <div class='ui grid'>
-                    <br>
-                    <div class='row'>
-                        <div class='left floated four wide column'>
-                            <div class="ui blue large message">{{ message }}</div>
-                        </div>
-                    </div>
+{% block body %}
+<body style="background-color: #001219;">
+  <link rel="stylesheet"
+  type='text/css'
+  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css"/>
+  <meta http-equiv="refresh" content="60">
+  <header class="header" role="banner" style="z-index: 1000000;">
+    <h1 class="logo">
+      <a href="/">IvanK</a>
+    </h1>
+    <div class="nav-wrap">
+      <nav class="main-nav" role="navigation">
+        <ul class="unstyled list-hover-slide">
+          <li>
+            <a href="{% url 'profiles:my-profile-view' %}">
+              <img src="{{avatar}}" width="100px" height="100px"/>
+              <br>
+              <br>
+              <p>{{name}}</p>
+            </a>
+          </li>
+          <li>
+            <form class="search" action="{% url 'profiles:search-profiles-view' %}">
+                <label class="search__label" for="search">Поиск</label>
+                <div class="search__input-wrap">
+                    <input class="search__input" type="text" name="q" placeholder="Search for profiles...">
+                    <button class="search__button" type="submit" aria-label="Search">
+                        <svg class="search__icon" viewBox="0 0 36 36" width="36px" height="36px" aria-hidden="true">
+                            <g class="search__icon-g" stroke="currentcolor" stroke-linecap="round" stroke-width="4" transform="translate(6,6)">
+                                <ellipse class="search__icon-ellipse" fill="none" cx="9" cy="9" rx="7" ry="7" transform="rotate(45,9,9)" />
+                                <line class="search__icon-line1" x1="15" y1="15" x2="21" y2="21" />
+                                <line class="search__icon-line2" x1="21" y1="21" x2="15" y2="15" />
+                                <line class="search__icon-line3" x1="21" y1="21" x2="15" y2="15" />
+                            </g>
+                        </svg>
+                    </button>
                 </div>
-            {% else %}
-                <div class='ui grid'>
-                    <br>
-                    <div class='row'>
-                        <div class='right floated  four wide column'>
-                            <div class="ui left floated red large message">{{ message }}</div>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        <h1 style="text-align: center">You are not friends with {{ profile }}!</h1>
-    {% endif %}
-{% endblock content %}
+            </form>
+          </li>
+          <li><a href="{% url 'posts:main-post-view' %}">Посты</a></li>
+          <li><a href="{% url 'profiles:messenger-list-view'%}">Мессенджер</a></li>
+          <li><a href="{% url 'profiles:my-friends-view' %}">Друзья</a></li>
+          <ul class="social-links list-inline unstyled list-hover-slide">
+            <li><a href="{% url 'profiles:sent-invites-view' %}">Приглашения от вас</a></li>
+            <li><a href="{% url 'profiles:received-invites-view' %}">Приглашения вам</a></li>
+          </ul>
+          <li><a href='{% url "logout" %}'>Выйти</a></li>
+        </ul>
+      </nav>
+</header>
+    <main>
+      <form action="" method="POST">
+        {% csrf_token %}
+        <img src="{{ friend_avatar }}" style="margin-left: 25%; margin-top: 2%; width: 10%; display: inline-block; border: 4px rgb(248, 148, 9)  solid;"/>
+        <h1 style="margin-left: 2%; display: inline-block; color: rgb(205, 144, 58);">{{friend_name}}</h1>
+        <input type="text" name="content" placeholder="Нажми Enter для отправки" id="id_content" style="display: inline; width: 65%; margin-left: 25%; margin-top: 2%; height: 4%; border: 2px solid rgb(248, 148, 9); background-color: rgb(254, 190, 101);">
+        <div style="display: inline; width: 45%; height: 10%;">
+          <!-- <button class="btn-hover color-2" style="border-radius: 5%;" type="submit">Отправить</button> -->
+        </div>
+      </form>
+      <br>
+      {% for message in messages %}
+          {% if message.content in sent %}
+              <div class='ui grid' style="margin-left: 24.1%;">
+                  <br>
+                  <div class='row'>
+                      <div class='left floated four wide column'>
+                          <div class="ui large message" style="background-color: rgb(205, 144, 58); color: white;">
+                            {{ message.content }}
+                            <br>
+                            <br>
+                            <h6>{{message.created|timesince}} назад</h6>
+                            <h6>{{message.created}}</h6>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          {% else %}
+              <div class='ui grid' style="margin-right: 9%;">
+                  <br>
+                  <div class='row'>
+                      <div class='right floated  four wide column'>
+                          <div class="ui left floated red large message" style="background-color: rgb(254, 190, 101);">
+                            {{ message.content }}
+                            <br>
+                            <br>
+                            <h6>{{message.created|timesince}} назад</h6>
+                            <h6>{{message.created}}</h6>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          {% endif %}
+      {% endfor %}
+    </main>
+</body>
+
+</html>
+{% endblock body %}
