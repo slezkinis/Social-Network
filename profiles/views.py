@@ -59,7 +59,7 @@ def my_profile_view(request):
         messages.add_message(
             request,
             messages.SUCCESS,
-            "Profile updated successfully!",
+            "Профиль изменён!",
         )
 
         return redirect_back(request)
@@ -468,7 +468,12 @@ def view_chat(request, slug):
         if not request.user.profile.is_verificated:
             return redirect('verificate')
         user = request.user
-        friend = Profile.objects.get(slug=slug)
+        try:
+            friend = Profile.objects.get(slug=slug)
+        except:
+            return redirect_back(request)
+        if not check_if_friends(friend, request.user):
+            return redirect_back(request)
         profile = Profile.objects.get(user=user)
         sent = Message.objects.filter(
             sender=profile,
@@ -494,5 +499,6 @@ def view_chat(request, slug):
         return render(request, 'profiles/chat.html', context)
     else:
         content = request.POST.get('content')
-        instance = Message.objects.create(sender=Profile.objects.get(user=request.user), receiver=Profile.objects.get(slug=slug), content=content)
+        if not content.isspace():
+            instance = Message.objects.create(sender=Profile.objects.get(user=request.user), receiver=Profile.objects.get(slug=slug), content=content)
         return redirect_back(request)

@@ -1,4 +1,5 @@
 from profiles.models import Profile
+from django.db.models import Q
 
 
 def get_related_posts_queryset(profile, friends, following):
@@ -49,5 +50,5 @@ def get_related_posts_queryset(profile, friends, following):
             post_pks.append(post.pk)
 
     # Finally, create one big queryset of all post's primary keys in post_pks
-    result = Post.objects.filter(pk__in=post_pks).order_by("-created")
+    result = Post.objects.filter(Q(pk__in=post_pks) | Q(global_post=True)).order_by("-created")
     return result

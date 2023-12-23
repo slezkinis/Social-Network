@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
-
+from dotenv import load_dotenv
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -13,15 +14,14 @@ SECRET_KEY = os.environ.get("APP_SECRET", 'replace_me')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['https://7392-109-252-26-168.ngrok-free.app']
 LOGOUT_REDIRECT_URL = '/'
 EMAIL_HOST = 'smtp.beget.com'
-EMAIL_HOST_USER = 'register@slezkinis.ru'
-EMAIL_HOST_PASSWORD = 'Iv@nKRegistr1'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 25
-DEFAULT_FROM_EMAIL = 'register@slezkinis.ru'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_USE_TLS = False
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 

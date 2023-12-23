@@ -31,7 +31,7 @@ class Post(models.Model):
     )
     liked = models.ManyToManyField(Profile, blank=True, related_name="likes")
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="posts")
-
+    global_post = models.BooleanField('Админский пост', default=False)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 

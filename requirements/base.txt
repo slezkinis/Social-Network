@@ -11,3 +11,4 @@ django-allauth # https://github.com/pennersr/django-allauth
 # PostgreSQL
 # ----------------------------------------------------------------------------
 psycopg2-binary # https://github.com/psycopg/psycopg2
+python-dotenv
