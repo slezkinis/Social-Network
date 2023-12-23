@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}
+    Регистрация
+{% endblock title %}
+{% block body %}
+<body style=" display: flex; justify-content: space-around;">
+    <header class="header" role="banner" style="z-index: 1000000;">
+        <h1 class="logo">
+            <a href="/">IvanK</a>
+        </h1>
+        <div class="nav-wrap">
+            <nav class="main-nav" role="navigation">
+                <ul class="unstyled list-hover-slide" style="margin-top: 230%;">
+                    <li><a href='{% url "login" %}'>Вход</a></li>
+                    <li><a href='{% url "register" %}'>Регистрация</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <section style="height: 75%; width: 30%; margin-top: 3%;">
+        <form class="signup ui form" id="signup_form" method="post" action="">
+            <h1 style="font-size: 2rem; color: #fff; text-align: center;">Регистрация</h1>
+            <div class="inputbox">
+                <ion-icon name="mail-outline"></ion-icon>
+                <input type="text" name="username" required>
+                <label for="">Имя пользователя</label>
+            </div>
+            <div class="inputbox">
+                <ion-icon name="mail-outline"></ion-icon>
+                <input type="email" name='email' required>
+                <label for="">Email</label>
+            </div>
+            <div class="inputbox">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <input type="password" name='password1' required>
+                <label for="">Пароль</label>
+            </div>
+            <div class="inputbox">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <input type="password" name='password2' required>
+                <label for="">Пароль ещё раз</label>
+            </div>
+            <button type="submit">Зарегистрироваться</button>
+            {% if errors %}
+            {% for error in errors %}
+            <h4 style="color: rgb(152, 28, 28); text-align: center; margin-top: 7%;">{{error}}</h4>
+            {% endfor %}
+            {% endif %}
+            <div class="register">
+                <p>Уже есть аккаунт <br> <a href='{% url "login" %}'>Вход</a></p>
+            </div>
+            {% csrf_token %}
+
+        </form>
+        <!-- <form method="post" action="">
+            {{form}}
+            {% csrf_token %}
+            <button type="submit">Log in</button>
+        </form> -->
+    </section>
+</body>
+{% endblock body %}
+

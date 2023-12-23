@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}
+    Главная
+{% endblock title %}
+{% block body %}
+<body>
+    <header class="header" role="banner" style="z-index: 1000000;">
+        <h1 class="logo">
+            <a href="/">IvanK</a>
+        </h1>
+        <div class="nav-wrap">
+            <nav class="main-nav" role="navigation">
+                <ul class="unstyled list-hover-slide" style="margin-top: 230%;">
+                    <li><a href='{% url "login" %}'>Вход</a></li>
+                    <li><a href='{% url "register" %}'>Регистрация</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+</body>
+
+</html>
+{% endblock body %}
