@@ -181,9 +181,9 @@
                                     {% for c in post.comment_set.all %}
                                         <div class="ui segment mb-5">
                                             <img class="ui avatar image" src={{ c.profile.avatar.url }}>
-                                            <span style="color:gray">
+                                            <p style="color:gray">
                                                 <a style="color:black" href="{{ c.profile.get_absolute_url }}">{{ c.profile }}</a> {{ c.created|timesince }} назад
-                                            </span>
+                                            </p>
                                             <div style="color:black" class='mt-5'>{{ c.content }}</div>
                                             <br>
                                             {% if c.profile.user == request.user %}
