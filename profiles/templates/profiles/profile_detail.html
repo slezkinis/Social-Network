@@ -64,7 +64,7 @@
             </ul>
           </nav>
     </header>
-<main style="margin-left: 20%; background-color: #001219;">
+<main class="profile_main">
     <br>
     {% for message in messages %}
         {% if message.tags == 'error' %}
@@ -120,7 +120,7 @@
                             <button style="margin-top:10px;
                                            width:200px"
                                     type='submit'
-                                    class='ui positive basic button mb-5 w-big'>
+                                    class='ui positive basic button w-big mb-5 profile_button'>
                                 <i class='plus square icon'></i>
                                 Добавить друга
                             </button>
@@ -130,9 +130,8 @@
                     <!-- If request user sent invite -->
                     {% if profile.user in invited_users %}
                         <div>
-                            <button style="margin-top:10px;
-                                           width:200px"
-                                    class='ui disabled button mb-5 w-big'>
+                            <button
+                                    class='ui disabled button mb-5 w-big profile_button'>
                                 <i class='user icon'></i>
                                 Запрос отправлен
                             </button>
@@ -147,7 +146,7 @@
                             <button style="margin-top:10px;
                                            width:200px"
                                     type='submit'
-                                    class='ui positive basic button mb-5 w-big'>
+                                    class='ui positive basic button mb-5 w-big profile_button'>
                                 <i class='plus square icon'></i>
                                 Принять приглашение
                             </button>
@@ -159,10 +158,9 @@
                         <form action='{% url 'profiles:remove-friend' %}' method='POST'>
                             {% csrf_token %}
                             <input type='hidden' name='pk' value='{{ profile.pk }}'>
-                            <button style="margin-top:10px;
-                                           width:200px"
+                            <button
                                     type='submit'
-                                    class='ui negative basic button mb-5 w-big'>
+                                    class='ui negative basic button mb-5 w-big profile_button'>
                                 <i class='minus square icon'></i>
                                 Удалить из друзей
                             </button>
@@ -173,20 +171,18 @@
                         <form action='{% url "profiles:switch-follow-view" %}' method='POST'>
                             {% csrf_token %}
                             <input type='hidden' name='pk' value='{{ profile.pk }}'>
-                            <button style="margin-top:10px;
-                                           width:200px"
+                            <button
                                     type='submit'
-                                    class='ui positive basic button mb-5 w-big'>Подписаться</button>
+                                    class='ui positive basic button mb-5 w-big profile_button'>Подписаться</button>
                         </form>
                         <!-- Unfollow -->
                     {% else %}
                         <form action='{% url "profiles:switch-follow-view" %}' method='POST'>
                             {% csrf_token %}
                             <input type='hidden' name='pk' value='{{ profile.pk }}'>
-                            <button style="margin-top:10px;
-                                           width:200px"
+                            <button
                                     type='submit'
-                                    class='ui negative basic button mb-5 w-big'>
+                                    class='ui negative basic button mb-5 w-big profile_button'>
                                 Отписаться
                             </button>
                         </form>
@@ -194,10 +190,9 @@
                     <!-- Send a message -->
                     {% if request.user in profile.friends.all %}
                         <a href="{% url "profiles:chat-message-view" profile.slug %}">
-                            <button style="margin-top:10px;
-                                           width:200px"
+                            <button
                                     type='submit'
-                                    class='ui info teal basic button mb-5 w-big'>
+                                    class='ui info teal basic button mb-5 w-big profile_button'>
                                 Открыть чат
                             </button>
                         </a>
@@ -205,10 +200,10 @@
                 </div>
                 </div>
                 
-            <div class='twelve wide column'>
+            <div class='twelve wide column post_collumn'>
                 {% if posts %}
                     {% for post in posts  %}
-                        <div class='segment ui fluid'>
+                        <div class='segment ui fluid post_collumn'>
                             <div class="post-content">
                                 <h3>Пост #{{ forloop.revcounter }}</h3>
                                 <p style="color: gray">{{ post.created|timesince }} назад</p>

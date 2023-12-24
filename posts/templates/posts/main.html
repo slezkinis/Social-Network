@@ -64,7 +64,7 @@
             </ul>
           </nav>
     </header>
-    <main style="margin-left: 20%">
+    <main class="post_main">
         {% for message in messages %}
             {% if message.tags == 'error' %}
                 <div class="ui red message">
@@ -78,7 +78,6 @@
                 </div>
             {% endif %}
         {% endfor %}
-        <div class="ui mt-100 container">
             <div class="ui grid">
                 <div class="eleven wide column">
                     {% for post in qs %}
@@ -166,7 +165,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                {% if perms.posts.change_post %}
+                <!-- {% if perms.posts.change_post %} -->
                 <div class="five wide column">
                     <div class="ui segment">
                         <form action="" method="POST" class='ui form' enctype="multipart/form-data">
@@ -178,9 +177,8 @@
                         </form>
                     </div>
                 </div>
-                {% endif %}
+                <!-- {% endif %} -->
             </div>
-        </div>
     </main>
 
 

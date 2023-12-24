@@ -10,14 +10,14 @@
         </h1>
         <div class="nav-wrap">
             <nav class="main-nav" role="navigation">
-                <ul class="unstyled list-hover-slide" style="margin-top: 230%;">
+                <ul class="unstyled list-hover-slide">
                     <li><a href='{% url "login" %}'>Вход</a></li>
                     <li><a href='{% url "register" %}'>Регистрация</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-    <section style="height: 60%; width: 30%; margin-top: 5%;">
+    <section class="login_section">
         <form method="POST" action="#">
             <h1 style="font-size: 2rem; color: #fff; text-align: center;">Вход</h1>
             <div class="inputbox">

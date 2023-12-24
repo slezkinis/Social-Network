@@ -52,14 +52,14 @@
         <h1 style="font-weight: 1000; color: rgb(255, 149, 0)">Выход</h1>
         <h3>Ты уверен, что хочешь выйти?</h3>
         <form method="post" action="">
-          <div style="height: 10%">
+          <div class="logout_div">
             <!-- <button class="btn-hover color-8" style="margin-left: -1%;"><a href="index.html" style="color: white;">Cancel</a></button> -->
-            <input class="btn-hover color-8"
+            <input class="btn-hover color-8 logout_button"
                type="button"
                value="Отмена"
                onclick="window.history.go(-1);"/>
                <!-- <button class="btn-hover color-8" style="margin-left: -1%;">123</button> -->
-            <button class="btn-hover color-11" type="submit">Выйти</button>
+            <button class="btn-hover color-11 logout_button" type="submit">Выйти</button>
           </div>
           {% csrf_token %}
         </form>
