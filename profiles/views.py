@@ -207,7 +207,10 @@ def search_profiles(request):
     View url: /profiles/search/
     """
     search = request.GET.get("q", "")
-    profiles = Profile.objects.filter(user__username__icontains=search)
+    if not search:
+        profiles = Profile.objects.all()
+    else:
+        profiles = Profile.objects.filter(user__username__icontains=search)
     following = request.user.profile.following.all()
     invited_users, incoming_invite_users = get_relationship_users(request.user.profile)
     context = {
@@ -218,13 +221,11 @@ def search_profiles(request):
         "incoming_invite_users": incoming_invite_users,
         "name": request.user,
         "avatar": request.user.profile.avatar.url
-
     }
 
-    if search:
-        return render(request, "profiles/search_profiles.html", context)
+    return render(request, "profiles/search_profiles.html", context)
 
-    return render(request, "profiles/search_profiles.html")
+    # return render(request, "profiles/search_profiles.html")
 
 
 @login_required(login_url='/')

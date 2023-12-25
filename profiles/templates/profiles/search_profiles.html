@@ -50,6 +50,7 @@
 </header>
   <h1 style="color: rgb(205, 144, 58); margin-left: 17%;">Результаты поиска</h1>
   {% if not profiles %}<h1 style="color: rgb(205, 144, 58); text-align:center">Ничего не найдено(</h1>{% endif %}
+  {% if not search %}<h1 style="color: rgb(205, 144, 58); text-align:center">Все зарегистрированные пользователи:</h1>{% endif %}
   {% for profile in profiles %}
   <div class="border_2">
     <div style="margin-left: 0.5%; margin-top: 0.3%;  width: 30%; display: flex;;">

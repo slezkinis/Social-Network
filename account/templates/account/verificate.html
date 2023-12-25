@@ -811,7 +811,7 @@ document.addEventListener("DOMContentLoaded", function () {
             {% endfor %}
             {% endif %}
             <div class="register">
-                <p>Не пришел код<br> <a href="{% url 'update_code' %}">Отправить снова</a></p>
+                <p>Не пришел код?<br> <a href="{% url 'update_code' %}">Отправить снова</a></p>
             </div>
             {% csrf_token %}
         </form>

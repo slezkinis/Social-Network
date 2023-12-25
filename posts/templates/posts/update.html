@@ -51,12 +51,11 @@
   <main>
     <br>
     <div class="border">
-      <h2 style="color: rgb(167, 114, 2); margin-left: 0.5%;">Update Post</h2>
+      <h2 style="color: rgb(167, 114, 2); margin-left: 0.5%;">Изменить пост</h2>
       <br>
-      <p style='color:rgb(167, 114, 2); margin-left: 0.5%;'>Content</p>
+      <p style='color:rgb(167, 114, 2); margin-left: 0.5%;'>Текст поста</p>
     <form action="" method="POST" class="ui form" enctype="mutlipart/form-data" id="1">
       {% for i in form %}
-      {{i.value}}
       <textarea type="text" name="content" style="width: 99%; resize: vertical; margin-left: 0.5%;">{{i.value}}</textarea>
       {% endfor %}
       {% csrf_token %}
