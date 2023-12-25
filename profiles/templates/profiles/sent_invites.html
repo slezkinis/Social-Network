@@ -60,10 +60,10 @@
                   <h3 style="color: rgb(205, 144, 58); display: block;">{{profile.bio}}</h3>
               </div>
           </div>
-          <form action="{{ profile.get_absolute_url }}" id="1">
+          <form action="{{ profile.get_absolute_url }}" id="{{ profile.pk }}_1">
           </form>
           <div style="display: flex; width: 80%; justify-content: right; height: 100%; vertical-align: center; align-items: center;">
-            <button class="btn-hover color-1" style="align-items: center;" form="1">Перейти в профиль</button>
+            <button class="btn-hover color-1" style="align-items: center;" form="{{ profile.pk }}_1">Перейти в профиль</button>
           </div>
         </div>
         {% endfor %}

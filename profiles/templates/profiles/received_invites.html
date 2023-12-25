@@ -60,20 +60,20 @@
                   <h3 style="color: rgb(205, 144, 58); display: block;">{{profile.bio}}</h3>
               </div>
           </div>
-          <form action="{{ profile.get_absolute_url }}" id="1">
+          <form action="{{ profile.get_absolute_url }}" id="{{ profile.pk }}_1">
           </form>
-          <form action='{% url 'profiles:accept-invite' %}' method='POST' id="2">
+          <form action='{% url 'profiles:accept-invite' %}' method='POST' id="{{ profile.pk }}_2">
             {% csrf_token %}
             <input type='hidden' name='pk' value='{{ profile.pk }}'>
           </form>
-          <form action='{% url 'profiles:reject-invite' %}' method='POST' id="3">
+          <form action='{% url 'profiles:reject-invite' %}' method='POST' id="{{ profile.pk }}_3">
             {% csrf_token %}
             <input type='hidden' name='pk' value='{{ profile.pk }}'>
           </form>
           <div style="display: flex; width: 80%; justify-content: right; height: 100%; vertical-align: center; align-items: center;">
-            <button class="btn-hover color-1" style="align-items: center;" form="1">Перейти в профиль</button>
-            <button type="submit" form="2" class="btn-hover color-6">Принять</button>
-            <button type="submit" form="3" class="btn-hover color-11">Отклонить</button>
+            <button class="btn-hover color-1" style="align-items: center;" form="{{ profile.pk }}_1">Перейти в профиль</button>
+            <button type="submit" form="{{ profile.pk }}_2" class="btn-hover color-6">Принять</button>
+            <button type="submit" form="{{ profile.pk }}_3" class="btn-hover color-11">Отклонить</button>
           </div>
         </div>
         {% endfor %}

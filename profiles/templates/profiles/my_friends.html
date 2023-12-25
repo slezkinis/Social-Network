@@ -60,53 +60,53 @@
                   <h3 style="color: rgb(205, 144, 58); display: block;">{{profile.bio}}</h3>
               </div>
           </div>
-          <form action="{{ profile.get_absolute_url }}" id="1">
+          <form action="{{ profile.get_absolute_url }}" id="{{ profile.pk }}_1">
           </form>
           {% if profile.user not in invited_users and profile.user not in incoming_invite_users and request.user not in profile.friends.all %}
-              <form action='{% url 'profiles:send-invite' %}' id="2" method='POST'>
+              <form action='{% url 'profiles:send-invite' %}' id="{{ profile.pk }}_2" method='POST'>
                   {% csrf_token %}
                   <input type='hidden' name='pk' value='{{ profile.pk }}'>
               </form>
           {% endif %}
           {% if profile.user in incoming_invite_users and profile.user not in invited_users %}
-              <form action='{% url 'profiles:accept-invite' %}' id="3" method='POST'>
+              <form action='{% url 'profiles:accept-invite' %}' id="{{ profile.pk }}_3" method='POST'>
                   {% csrf_token %}
                   <input type='hidden' name='pk' value='{{ profile.pk }}'>
               </form>
           {% endif %}
           {% if request.user in profile.friends.all %}
-              <form action='{% url 'profiles:remove-friend' %}' id="4" method='POST'>
+              <form action='{% url 'profiles:remove-friend' %}' id="{{ profile.pk }}_4" method='POST'>
                   {% csrf_token %}
                   <input type='hidden' name='pk' value='{{ profile.pk }}'>
               </form>
           {% endif %}
           {% if profile.user not in following %}
-              <form action='{% url "profiles:switch-follow-view" %}' id="5" method='POST'>
+              <form action='{% url "profiles:switch-follow-view" %}' id="{{ profile.pk }}_5" method='POST'>
                   {% csrf_token %}
                   <input type='hidden' name='pk' value='{{ profile.pk }}'>
               </form>
               <!-- Unfollow -->
           {% else %}
-              <form action='{% url "profiles:switch-follow-view" %}' id="6" method='POST'>
+              <form action='{% url "profiles:switch-follow-view" %}' id="{{ profile.pk }}_6" method='POST'>
                   {% csrf_token %}
                   <input type='hidden' name='pk' value='{{ profile.pk }}'>
               </form>
           {% endif %}
           <div style="display: flex; width: 80%; justify-content: right; height: 100%; vertical-align: center; align-items: center;">
-            <button class="btn-hover color-1" style="align-items: center;" form="1">Профиль</button>
+            <button class="btn-hover color-1" style="align-items: center;" form="{{ profile.pk }}_1">Профиль</button>
             {% if profile.user not in invited_users and profile.user not in incoming_invite_users and request.user not in profile.friends.all %}
-              <button type="submit" form="2" class="btn-hover color-6">Добавить в друзья</button>
+              <button type="submit" form="{{ profile.pk }}_2" class="btn-hover color-6">Добавить в друзья</button>
             {% endif %}
             {% if profile.user in incoming_invite_users and profile.user not in invited_users %}
-              <button type="submit" form="3" class="btn-hover color-6">Принять</button>
+              <button type="submit" form="{{ profile.pk }}_3" class="btn-hover color-6">Принять</button>
             {% endif %}
             {% if request.user in profile.friends.all %}
-              <button type="submit" form="4" class="btn-hover color-11">Удалить из друзей</button>
+              <button type="submit" form="{{ profile.pk }}_4" class="btn-hover color-11">Удалить из друзей</button>
             {% endif %}
             {% if profile.user not in following %}
-              <button type="submit" form="5" class="btn-hover color-6">Подписаться</button>
+              <button type="submit" form="{{ profile.pk }}_5" class="btn-hover color-6">Подписаться</button>
             {% else %}
-              <button type="submit" form="6" class="btn-hover color-11">Отписаться</button>
+              <button type="submit" form="{{ profile.pk }}_6" class="btn-hover color-11">Отписаться</button>
             {% endif %}
           </div>
         </div>

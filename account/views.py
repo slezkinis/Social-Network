@@ -32,6 +32,10 @@ def user_login(request):
     return render(request, 'account/login.html', {'form': form, "errors": errors})
 
 
+def match(text, alphabet=set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя')):
+    return not alphabet.isdisjoint(text.lower())
+
+
 def register(request):
     errors = []
     if request.method == 'GET' and request.user.is_authenticated:
@@ -43,7 +47,10 @@ def register(request):
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password1')
             password2 = form.cleaned_data.get('password2')
-            if password != password2:
+            if match(username):
+                errors.append('Логин должен быть без использования кирилицы')
+                pass
+            elif password != password2:
                 errors.append('Пароли не совпадают!')
                 pass
             else:

@@ -36,7 +36,7 @@ class VerificateRequiredMixin(AccessMixin):
         return super().dispatch(request, *args, **kwargs)
 
 
-@login_required
+@login_required(login_url='/')
 def my_profile_view(request):
     """
     Shows request's user profile.
@@ -120,7 +120,7 @@ def sent_invites_view(request):
     return render(request, "profiles/sent_invites.html", context)
 
 
-@login_required
+@login_required(login_url='/')
 def switch_follow(request):
     """
     Follows/unfollows user by pk.
@@ -135,7 +135,7 @@ def switch_follow(request):
     return redirect_back(request)
 
 
-@login_required
+@login_required(login_url='/')
 def accept_invitation(request):
     """
     Accepts invitation from user by pk.
@@ -154,7 +154,7 @@ def accept_invitation(request):
     return redirect_back(request)
 
 
-@login_required
+@login_required(login_url='/')
 def reject_invitation(request):
     """
     Rejects (deletes) invitation from user by pk.
@@ -172,7 +172,7 @@ def reject_invitation(request):
     return redirect_back(request)
 
 
-@login_required
+@login_required(login_url='/')
 def my_friends_view(request):
     """
     Shows request's user friends.
@@ -200,7 +200,7 @@ def my_friends_view(request):
     return render(request, "profiles/my_friends.html", context)
 
 
-@login_required
+@login_required(login_url='/')
 def search_profiles(request):
     """
     Searches for profiles by their username.
@@ -227,7 +227,7 @@ def search_profiles(request):
     return render(request, "profiles/search_profiles.html")
 
 
-@login_required
+@login_required(login_url='/')
 def send_invitation(request):
     """
     Creates a "sent" relationship between request's profile
@@ -247,7 +247,7 @@ def send_invitation(request):
     return redirect_back(request)
 
 
-@login_required
+@login_required(login_url='/')
 def remove_friend(request):
     """
     Deletes relationship between request's profile and target profile.

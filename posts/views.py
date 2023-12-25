@@ -21,7 +21,7 @@ from .views_utils import (
 # Function-based views
 
 
-@login_required
+@login_required(login_url='/')
 def post_comment_create_and_list_view(request):
     """
     Shows request's user friends.
@@ -55,7 +55,7 @@ def post_comment_create_and_list_view(request):
     return render(request, "posts/main.html", context)
 
 
-@login_required
+@login_required(login_url='/')
 def switch_like(request):
     """
     Adds/removes like to a post.
