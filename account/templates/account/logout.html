@@ -4,6 +4,7 @@
 {% endblock title %}
 {% block body %}
 <body>
+  {% if request.user.profile.is_verificated %}
   <header class="header" role="banner" style="z-index: 1000000;">
     <h1 class="logo">
       <a href="/">IvanK</a>
@@ -48,6 +49,22 @@
         </ul>
       </nav>
 </header>
+{% else %}
+<header class="header" role="banner" style="z-index: 1000000;">
+  <h1 class="logo">
+      <a href="/">GoshK</a>
+  </h1>
+  <div class="nav-wrap">
+      <nav class="main-nav" role="navigation">
+          <ul class="unstyled list-hover-slide">
+              <li><a href='{% url "login" %}'>Вход</a></li>
+              <li><a href='{% url "register" %}'>Регистрация</a></li>
+              {% if request.user.is_authenticated %}<li><a href='{% url "logout" %}'>Выход</a></li>{% endif %}
+          </ul>
+      </nav>
+  </div>
+</header>
+{% endif %}
     <main style="margin-left: 18%; margin-top: 1%; color: rgb(205, 144, 58)">
         <h1 style="font-weight: 1000; color: rgb(255, 149, 0)">Выход</h1>
         <h3>Ты уверен, что хочешь выйти?</h3>

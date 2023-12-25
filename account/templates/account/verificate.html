@@ -785,13 +785,14 @@ document.addEventListener("DOMContentLoaded", function () {
 <body style=" display: flex; justify-content: space-around;">
     <header class="header" role="banner" style="z-index: 1000000;">
         <h1 class="logo">
-            <a href="/">GoshK</a>
+            <a href="/">IvanK</a>
         </h1>
         <div class="nav-wrap">
             <nav class="main-nav" role="navigation">
                 <ul class="unstyled list-hover-slide">
                     <li><a href='{% url "login" %}'>Вход</a></li>
                     <li><a href='{% url "register" %}'>Регистрация</a></li>
+                    {% if request.user.is_authenticated %}<li><a href='{% url "logout" %}'>Выход</a></li>{% endif %}
                 </ul>
             </nav>
         </div>
