@@ -9,12 +9,14 @@ import datetime
 
 def user_login(request):
     errors = []
+    username = ''
     if request.method == 'GET' and request.user.is_authenticated:
         return redirect('/')
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
+            username = cd['username']
             user = authenticate(username=cd['username'], password=cd['password'])
             if user is not None:
                 if user.is_active:
@@ -29,7 +31,7 @@ def user_login(request):
                 errors.append('Неправильный логин или пароль')
     else:
         form = LoginForm()
-    return render(request, 'account/login.html', {'form': form, "errors": errors})
+    return render(request, 'account/login.html', {'form': form, "errors": errors, 'username': username})
 
 
 def match(text, alphabet=set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя')):
@@ -38,6 +40,8 @@ def match(text, alphabet=set('абвгдеёжзийклмнопрстуфхцч
 
 def register(request):
     errors = []
+    username = ''
+    email = ''
     if request.method == 'GET' and request.user.is_authenticated:
         return redirect('/')
     if request.method == 'POST':
@@ -71,7 +75,7 @@ def register(request):
                         return redirect('/auth/verificate')
     else:
         form = RegisterForm()
-    return render(request, 'account/signup.html', {'form': form, "errors": errors})
+    return render(request, 'account/signup.html', {'form': form, "errors": errors, "username": username, "email": email})
 
 
 def verificate(request):
