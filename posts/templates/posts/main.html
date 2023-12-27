@@ -79,7 +79,7 @@
             {% endif %}
         {% endfor %}
             <div class="ui grid">
-                <div class="eleven wide column">
+                <div class="eleven wide column" id="post_column">
                     {% if not qs %}<h1 style="color: rgb(205, 144, 58); text-align:center">Путо(</h1>{% endif %}
                     {% for post in qs %}
                         <div class="ui fluid card">
