@@ -26,6 +26,9 @@ from .views_utils import (
 )
 from django.contrib.auth.mixins import AccessMixin
 
+from django.http import JsonResponse
+from django.utils.timesince import timesince
+
 # Function-based views
 
 
@@ -462,6 +465,42 @@ def messanger_list(request):
 #         context["qs"] = self.get_queryset()
 
 #         return context
+
+def view_chat_json(request, slug):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    if not request.user.profile.is_verificated:
+        return redirect('verificate')
+    user = request.user
+    try:
+        friend = Profile.objects.get(slug=slug)
+    except:
+        return redirect_back(request)
+    if not check_if_friends(friend, request.user):
+        return redirect_back(request)
+    profile = Profile.objects.get(user=user)
+    sent = Message.objects.filter(
+        sender=profile,
+        receiver=friend,
+    )
+    received = Message.objects.filter(
+        sender=friend,
+        receiver=profile,
+    )
+    messages = sent | received
+    ordered_messages_old = list(
+        messages.order_by("-created"),
+    )
+    ordered_messages = []
+    for i in ordered_messages_old:
+        ordered_messages.append({'pk': i.pk, 'content': i.content, 'created': i.created.strftime('%m/%d/%Y, %H:%M:%S')})
+    context = {
+        'messages': ordered_messages,
+        "received": [i.pk for i in received],
+        "sent": [i.pk for i in sent]
+    }
+    return JsonResponse(context)
+
 def view_chat(request, slug):
     if request.method == 'GET':
         if not request.user.is_authenticated:
@@ -475,27 +514,11 @@ def view_chat(request, slug):
             return redirect_back(request)
         if not check_if_friends(friend, request.user):
             return redirect_back(request)
-        profile = Profile.objects.get(user=user)
-        sent = Message.objects.filter(
-            sender=profile,
-            receiver=friend,
-        )
-        received = Message.objects.filter(
-            sender=friend,
-            receiver=profile,
-        )
-        messages = sent | received
-        ordered_messages = list(
-            messages.order_by("-created").values("content", "created"),
-        )
         context = {
             'avatar': request.build_absolute_uri(f'/media/{user.profile.avatar}'),
             'name': request.user.username,
             'friend_avatar': request.build_absolute_uri(f'/media/{friend.avatar}'),
             'friend_name': friend.user.username,
-            'messages': ordered_messages,
-            "received": [i.content for i in received],
-            "sent": [i.content for i in sent]
         }
         return render(request, 'profiles/chat.html', context)
     else:

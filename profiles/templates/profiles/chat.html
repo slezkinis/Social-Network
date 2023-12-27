@@ -3,11 +3,13 @@
     Чат с {{friend_name}}
 {% endblock title %}
 {% block body %}
+{% load static %}
+
 <body style="background-color: #001219;">
   <link rel="stylesheet"
   type='text/css'
   href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css"/>
-  <meta http-equiv="refresh" content="60">
+  <!-- <meta http-equiv="refresh" content="60"> -->
   <header class="header" role="banner" style="z-index: 1000000;">
     <h1 class="logo">
       <a href="/">IvanK</a>
@@ -64,41 +66,9 @@
         </div>
       </form>
       <br>
-      {% for message in messages %}
-          {% if message.content in sent %}
-              <div class='ui grid' style="margin-left: 24.1%;">
-                  <br>
-                  <div class='row'>
-                      <div class='left floated four wide column'>
-                          <div class="ui large message" style="background-color: rgb(205, 144, 58); color: white;">
-                            {{ message.content }}
-                            <br>
-                            <br>
-                            <h6>{{message.created|timesince}} назад</h6>
-                            <h6>{{message.created}}</h6>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          {% else %}
-              <div class='ui grid' style="margin-right: 9%;">
-                  <br>
-                  <div class='row'>
-                      <div class='right floated  four wide column'>
-                          <div class="ui left floated red large message" style="background-color: rgb(254, 190, 101);">
-                            {{ message.content }}
-                            <br>
-                            <br>
-                            <h6>{{message.created|timesince}} назад</h6>
-                            <h6>{{message.created}}</h6>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          {% endif %}
-      {% endfor %}
+      <div class="messages"></div>
     </main>
 </body>
-
+<script src="{% static 'messanger.js' %}" defer></script>
 </html>
 {% endblock body %}
