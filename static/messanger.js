@@ -14,13 +14,13 @@ window.addEventListener("DOMContentLoaded", () => {
                 let data = JSON.parse(request.response)
                 // console.log(data.messages);
                 if (JSON.stringify(data.messages) != JSON.stringify(old_data)) {
-                    console.log(JSON.stringify(data.received) != JSON.stringify(old_recived));
-                    console.log(data.received);
+                    // console.log(JSON.stringify(data.received) != JSON.stringify(old_recived));
+                    // console.log(data.received);
                     // if (JSON.stringify(data.received) != JSON.stringify(old_recived) && old_recived.length != 0) {
                     //     audio.play();
                     // }
                     old_recived = data.received;
-                    console.log("NEW!");
+                    // console.log("NEW!");
                     old_data  = data.messages;
                     document.querySelector('.messages').remove();
                     let div = document.createElement('div');
