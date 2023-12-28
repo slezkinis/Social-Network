@@ -10,15 +10,22 @@ window.addEventListener("DOMContentLoaded", () => {
         request.setRequestHeader("Content-Type" , "application/json; charset=utf-8");
         request.send()
         request.addEventListener('readystatechange', function () {
+            function notifyMe (input_message) {
+                var notification = new Notification ("Новое уведомление", {
+                    tag : "ache-mail",
+                    body : "Прочитай скорее)",
+                });
+                console.log('1234');
+            }
             if (request.status == 200 && request.readyState == 4) {
                 let data = JSON.parse(request.response)
                 // console.log(data.messages);
                 if (JSON.stringify(data.messages) != JSON.stringify(old_data)) {
                     // console.log(JSON.stringify(data.received) != JSON.stringify(old_recived));
                     // console.log(data.received);
-                    // if (JSON.stringify(data.received) != JSON.stringify(old_recived) && old_recived.length != 0) {
-                    //     audio.play();
-                    // }
+                    if (JSON.stringify(data.received) != JSON.stringify(old_recived) && old_recived.length != 0) {
+                        notifyMe();
+                    }
                     old_recived = data.received;
                     // console.log("NEW!");
                     old_data  = data.messages;
@@ -80,6 +87,22 @@ window.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+	
+	function notifSet() {
+		if (!("Notification" in window))
+			alert ("Ваш браузер не поддерживает уведомления.");
+		else if (Notification.permission === "granted") {
+                    console.log('Уведомления подуключены');
+        }  else if (Notification.permission !== "denied") {
+			Notification.requestPermission (function (permission) {
+				if (!('permission' in Notification))
+					Notification.permission = permission;
+				if (permission === "granted")
+                    console.log('Уведомления подуключены');
+			});
+		}
+	}
+    notifSet();
     setInterval(req, 5000);
     req();
 });
