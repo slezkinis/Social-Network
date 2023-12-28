@@ -48,7 +48,7 @@
         </ul>
       </nav>
 </header>
-    <main>
+    <main class="invites_main">
         <h1 style="color: rgb(205, 144, 58); margin-left: 17%;">Отправленные приглашения в друзья</h1>
         {% if not profiles %}<h2 style="color: rgb(205, 144, 58); margin-left: 17%;">Здесь будут показаны отправленные вами приглашения в друзья</h2>{% endif %}
         {% for profile in profiles %}
@@ -57,7 +57,7 @@
               <img src="{{ profile.avatar.url }}" class="friends_logo">
               <div style="margin-left: 2%;">
                   <h2 style="color: rgb(205, 144, 58); display: inline-block;">{{ profile.user }}</h2>
-                  <h3 class="description">{{profile.bio}}</h3>
+                  <h3 style="color: rgb(205, 144, 58); display: block;">{{profile.bio}}</h3>
               </div>
           </div>
           <form action="{{ profile.get_absolute_url }}" id="{{ profile.pk }}_1">
