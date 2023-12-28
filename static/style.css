@@ -46,8 +46,8 @@ body {
 }
 
 .img-src {
-    height: 400px;
-    width: 550px;
+    height: auto;
+    width: 100%;
 }
 
 .navbar {
