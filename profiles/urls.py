@@ -21,7 +21,6 @@ from .views import (
 app_name = "profiles"
 
 urlpatterns = [
-    path("", ProfileListView.as_view(), name="all-profiles-view"),
     path("users/<slug>/", ProfileDetailView.as_view(), name="profile-detail-view"),
     path("messenger/", messanger_list, name="messenger-list-view"),
     path("chat/<slug>/", view_chat, name="chat-message-view"),
