@@ -57,7 +57,7 @@
         <img src="{{ profile.avatar.url }}" style="width: 23%; height: 95%; display: inline-block; border: 4px rgb(248, 148, 9)  solid;">
         <div style="margin-left: 2%;">
             <h2 style="color: rgb(205, 144, 58); display: inline-block;">{{ profile.user }}</h2>
-            <h3 style="color: rgb(205, 144, 58); display: block;">{{profile.bio}}</h3>
+            <h3 class="description">{{profile.bio}}</h3>
         </div>
     </div>
     <form action="{{ profile.get_absolute_url }}" id="{{ profile.pk }}_1">
