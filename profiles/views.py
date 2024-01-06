@@ -488,6 +488,7 @@ def view_chat_json(request, slug):
         receiver=profile,
     )
     messages = sent | received
+    messages.update(is_delivered=True)
     ordered_messages_old = list(
         messages.order_by("-created"),
     )
