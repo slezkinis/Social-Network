@@ -90,7 +90,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	
 	function notifSet() {
 		if (!("Notification" in window))
-			alert ("Ваш браузер не поддерживает уведомления.");
+			a = 1;
 		else if (Notification.permission === "granted") {
                     console.log('Уведомления подуключены');
         }  else if (Notification.permission !== "denied") {
