@@ -50,7 +50,7 @@ window.addEventListener("DOMContentLoaded", () => {
                             <div class='row'>
                                 <div class='left floated four wide column'>
                                     <div class="ui large message" style="background-color: rgb(205, 144, 58); color: white;">
-                                    ${item.content}
+                                    <p>${item.content}</p>
                                     <br>
                                     <br>
                                     <h6>${item.created}</h6>
@@ -69,7 +69,7 @@ window.addEventListener("DOMContentLoaded", () => {
                             <div class='row'>
                                 <div class='right floated  four wide column'>
                                     <div class="ui left floated red large message" style="background-color: rgb(254, 190, 101);">
-                                        ${item.content}
+                                        <p>${item.content}</p>
                                         <br>
                                         <br>
                                         <h6>${item.created}</h6>
