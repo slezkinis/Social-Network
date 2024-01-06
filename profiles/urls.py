@@ -15,7 +15,8 @@ from .views import (
     sent_invites_view,
     switch_follow,
     view_chat,
-    view_chat_json
+    view_chat_json,
+    get_new_messages
 )
 
 app_name = "profiles"
@@ -34,5 +35,6 @@ urlpatterns = [
     path("remove-friend/", remove_friend, name="remove-friend"),
     path("received_invites/accept/", accept_invitation, name="accept-invite"),
     path("received_invites/reject/", reject_invitation, name="reject-invite"),
-    path("chat/<slug>/json/", view_chat_json, name='chat_json')
+    path("chat/<slug>/json/", view_chat_json, name='chat_json'),
+    path("get_new_messages/", get_new_messages, name='new_messages')
 ]

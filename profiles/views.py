@@ -526,3 +526,11 @@ def view_chat(request, slug):
         if not content.isspace():
             instance = Message.objects.create(sender=Profile.objects.get(user=request.user), receiver=Profile.objects.get(slug=slug), content=content)
         return redirect_back(request)
+
+
+def get_new_messages(request):
+    new_messages = Message.objects.filter(receiver=request.user.profile, is_delivered=False).order_by("-created")
+    # new_messages = Message.objects.all()
+    data = {'status': True if new_messages else False, 'count': new_messages.count()}
+    new_messages.update(is_delivered=True)
+    return JsonResponse(data)

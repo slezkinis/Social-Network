@@ -18,6 +18,7 @@
     <link rel="stylesheet"
             type='text/css'
             href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/css/uikit.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 <body style="background-color: #001219;">
     <header class="header" role="banner" style="z-index: 1000000;">
@@ -180,10 +181,11 @@
             </div>
     </main>
 
-
+    <script src="{% static 'get_messages.js' %}" defer></script>
     <script src="{% static 'comments.js' %}"></script>
     <script src="{% static 'like.js' %}"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit-icons.min.js"></script>
 
 
 </body>

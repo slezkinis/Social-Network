@@ -150,6 +150,7 @@ class Message(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
 
+    is_delivered = models.BooleanField('Доставлено до получателя', default=False)
     def __str__(self):
         if len(str(self.content)) > 50:
             return f"{self.sender} - {str(self.content)[:50].strip()}.."
