@@ -532,6 +532,10 @@ def view_chat(request, slug):
 def get_new_messages(request):
     new_messages = Message.objects.filter(receiver=request.user.profile, is_delivered=False).order_by("-created")
     # new_messages = Message.objects.all()
-    data = {'status': True if new_messages else False, 'count': new_messages.count()}
+    if new_messages:
+        data = {'status': True if new_messages else False, 'count': new_messages.count(), 'url': f'/profiles/chat/{new_messages[0].sender.slug}'}
+    else:
+        data = {'status': True if new_messages else False, 'count': new_messages.count(), 'url': f'/profiles/messanger'}
     new_messages.update(is_delivered=True)
+    print(data)
     return JsonResponse(data)

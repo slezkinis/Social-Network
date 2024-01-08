@@ -20,6 +20,12 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/css/uikit.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+<style>
+    body {
+        position: absolute !important;
+        z-index: -1000;
+    }
+</style>
 <body style="background-color: #001219;">
     <header class="header" role="banner" style="z-index: 1000000;">
         <h1 class="logo">
@@ -66,6 +72,7 @@
           </nav>
     </header>
     <main class="post_main">
+        <!-- <button onclick="UIkit.notification({message: 'Новое уведомление'});">dfdfd</button> -->
         {% for message in messages %}
             {% if message.tags == 'error' %}
                 <div class="ui red message">
