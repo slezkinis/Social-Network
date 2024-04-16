@@ -16,7 +16,7 @@ a {
 .logo a {
     font-size: 27.7143px !important
 }
-.ui.segment {
+.ui.segment.place {
     margin-left: -30% !important;
     width: 60%;
 }
