@@ -6,6 +6,7 @@
 {% load static %}
 
 <body style="background-color: #001219;">
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" -- Custom JS -->
   <link rel="stylesheet"
   type='text/css'
   href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css"/>
@@ -18,7 +19,7 @@
       <nav class="main-nav" role="navigation">
         <ul class="unstyled list-hover-slide">
           <li>
-            <a href="{% url 'profiles:my-profile-view' %}">
+            <a class='avatarka' href="{% url 'profiles:my-profile-view' %}">
               <img src="{{avatar}}" width="100px" height="100px"/>
               <br>
               <br>

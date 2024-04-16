@@ -1,191 +1,188 @@
 {% extends "base.html" %}
 {% block title %}
-    Посты
+Посты
 {% endblock title %}
 {% block body %}
 {% load static %}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <!-- Custom CSS-->
-    <link rel="stylesheet"
-            type="text/css"
-            href="{% static 'style.css' %}"
-            --
-            Custom
-            JS
-            -->
-    <script type="text/javascript" src={% static 'main.js' %} defer></script>
-    <!-- Semantic UI -->
-    <link rel="stylesheet"
-            type='text/css'
-            href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css"/>
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/css/uikit.min.css" /> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script> -->
+<!-- Custom CSS-->
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" -- Custom JS -->
+<script type="text/javascript" src={% static 'main.js' %} defer></script>
+<!-- Semantic UI -->
+<link rel="stylesheet" type='text/css'
+    href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css" />
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/css/uikit.min.css" /> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script> -->
 <style>
     body {
         position: absolute !important;
         z-index: -1000;
     }
 </style>
+
 <body style="background-color: #001219;">
     <header class="header" role="banner" style="z-index: 1000000;">
         <h1 class="logo">
-          <a href="/">IvanK</a>
+            <a href="/">IvanK</a>
         </h1>
         <div class="nav-wrap">
-          <nav class="main-nav" role="navigation">
-            <ul class="unstyled list-hover-slide">
-              <li>
-                <a href="{% url 'profiles:my-profile-view' %}">
-                  <img src="{{avatar}}" width="100px" height="100px"/>
-                  <br>
-                  <br>
-                  <p>{{name}}</p>
-                </a>
-              </li>
-              <li>
-                <form class="search" action="{% url 'profiles:search-profiles-view' %}">
-                    <label class="search__label" for="search">Поиск</label>
-                    <div class="search__input-wrap">
-                        <input class="search__input" type="text" name="q" placeholder="Search for profiles...">
-                        <button class="search__button" type="submit" aria-label="Search">
-                            <svg class="search__icon" viewBox="0 0 36 36" width="36px" height="36px" aria-hidden="true">
-                                <g class="search__icon-g" stroke="currentcolor" stroke-linecap="round" stroke-width="4" transform="translate(6,6)">
-                                    <ellipse class="search__icon-ellipse" fill="none" cx="9" cy="9" rx="7" ry="7" transform="rotate(45,9,9)" />
-                                    <line class="search__icon-line1" x1="15" y1="15" x2="21" y2="21" />
-                                    <line class="search__icon-line2" x1="21" y1="21" x2="15" y2="15" />
-                                    <line class="search__icon-line3" x1="21" y1="21" x2="15" y2="15" />
-                                </g>
-                            </svg>
-                        </button>
-                    </div>
-                </form>
-              </li>
-              <li><a href="{% url 'posts:main-post-view' %}">Посты</a></li>
-              <li><a href="{% url 'profiles:messenger-list-view'%}">Мессенджер</a></li>
-              <li><a href="{% url 'profiles:my-friends-view' %}">Друзья</a></li>
-              <ul class="social-links list-inline unstyled list-hover-slide">
-                <li><a href="{% url 'profiles:sent-invites-view' %}">Приглашения от вас</a></li>
-                <li><a href="{% url 'profiles:received-invites-view' %}">Приглашения вам</a></li>
-              </ul>
-              <li><a href='{% url "logout" %}'>Выйти</a></li>
-            </ul>
-          </nav>
+            <nav class="main-nav" role="navigation">
+                <ul class="unstyled list-hover-slide">
+                    <li>
+                        <a class='avatarka' href="{% url 'profiles:my-profile-view' %}">
+                            <img src="{{avatar}}" width="100px" height="100px" />
+                            <br>
+                            <br>
+                            <p>{{name}}</p>
+                        </a>
+                    </li>
+                    <li>
+                        <form class="search" action="{% url 'profiles:search-profiles-view' %}">
+                            <label class="search__label" for="search">Поиск</label>
+                            <div class="search__input-wrap">
+                                <input class="search__input" type="text" name="q" placeholder="Search for profiles...">
+                                <button class="search__button" type="submit" aria-label="Search">
+                                    <svg class="search__icon" viewBox="0 0 36 36" width="36px" height="36px"
+                                        aria-hidden="true">
+                                        <g class="search__icon-g" stroke="currentcolor" stroke-linecap="round"
+                                            stroke-width="4" transform="translate(6,6)">
+                                            <ellipse class="search__icon-ellipse" fill="none" cx="9" cy="9" rx="7"
+                                                ry="7" transform="rotate(45,9,9)" />
+                                            <line class="search__icon-line1" x1="15" y1="15" x2="21" y2="21" />
+                                            <line class="search__icon-line2" x1="21" y1="21" x2="15" y2="15" />
+                                            <line class="search__icon-line3" x1="21" y1="21" x2="15" y2="15" />
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+                    </li>
+                    <li><a href="{% url 'posts:main-post-view' %}">Посты</a></li>
+                    <li><a href="{% url 'profiles:messenger-list-view'%}">Мессенджер</a></li>
+                    <li><a href="{% url 'profiles:my-friends-view' %}">Друзья</a></li>
+                    <ul class="social-links list-inline unstyled list-hover-slide">
+                        <li><a href="{% url 'profiles:sent-invites-view' %}">Приглашения от вас</a></li>
+                        <li><a href="{% url 'profiles:received-invites-view' %}">Приглашения вам</a></li>
+                    </ul>
+                    <li><a href='{% url "logout" %}'>Выйти</a></li>
+                </ul>
+            </nav>
     </header>
-    <main class="post_main">
+    <main class="post_main" style="min-width: 100%;">
         <!-- <button onclick="UIkit.notification({message: 'Новое уведомление'});">dfdfd</button> -->
         {% for message in messages %}
-            {% if message.tags == 'error' %}
-                <div class="ui red message">
-                    <div class="header">Ошибка</div>
-                    <p>{{ message }}</p>
-                </div>
-            {% else %}
-                <div class="ui green message">
-                    <div class="header">Успешно</div>
-                    <p>{{ message }}</p>
-                </div>
-            {% endif %}
+        {% if message.tags == 'error' %}
+        <div class="ui red message">
+            <div class="header">Ошибка</div>
+            <p>{{ message }}</p>
+        </div>
+        {% else %}
+        <div class="ui green message">
+            <div class="header">Успешно</div>
+            <p>{{ message }}</p>
+        </div>
+        {% endif %}
         {% endfor %}
-            <div class="ui grid">
-                <div class="eleven wide column" id="post_column">
-                    {% if not qs %}<h1 style="color: rgb(205, 144, 58); text-align:center">Путо(</h1>{% endif %}
-                    {% for post in qs %}
-                        <div class="ui fluid card">
-                            <div class="content">
-                                <div class="right floated meta">
-                                    <div class="ui grid">
-                                        <div class="row">
-                                            {% if request.user == post.author.user %}
-                                                <a href="{% url 'posts:post-update' post.pk %}">
-                                                    <button class="ui button bwhite-lg ">Изменить</button>
-                                                </a>
-                                                <a href="{% url 'posts:post-delete' post.pk %}">
-                                                    <button class="ui button bwhite-lg ">Удалить</button>
-                                                </a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                                <img class="ui avatar image" src={{ post.author.avatar.url }}>
-                                <p style="color:gray">
-                                    <a style="color:black" href="{{ post.author.get_absolute_url }}">{{ post.author.user }}</a>  {{ post.created|timesince }} назад
-                                </p>
-                            </div>
-                            <div class="ui fluid image">
-                                {% if post.image %}<img src={{ post.image.url }}>{% endif %}
-                            </div>
-                            <div class="content">
-                                <p>{{ post.content }}</p>
-                                <div style="display: flex; justify-content: right;">
-                                    <div class="cmt_btn {{ post.id }} ui button mb-5">
-                                        <i class="comment icon"></i>
-                                        <p style="display: inline-block;">{{ post.num_comments }}</p>
-                                    </div>
-                                    <form action="{% url 'posts:switch-like-view' %}"
-                                          method="POST"
-                                          class='like-form'
-                                          id='{{ post.id }}'>
-                                        {% csrf_token %}
-                                        <input type="hidden" name="post_id" value={{ post.id }}>
-                                        {% if profile not in post.liked.all %}
-                                            <button type="submit" class="ui button black like-btn{{ post.id }}">
-                                                <i class="heart icon"></i>
-                                                <p style="display: inline-block;" class="like-count{{ post.id }}">{{ post.liked.all.count }}</p>
-                                            </button>
-                                        {% else %}
-                                            <button type="submit" class="ui button negative like-btn{{ post.id }}">
-                                                <i class="heart icon"></i>
-                                                <p style="display: inline-block;" class="like-count{{ post.id }}">{{ post.liked.all.count }}</p>
-                                            </button>
-                                        {% endif %}
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="extra content">
-                                <div class="comment-box">
-                                    {% if post.comment_set.all %}
-                                        {% for c in post.comment_set.all %}
-                                            <div class="ui segment mb-5">
-                                                <img class="ui avatar image" src={{ c.profile.avatar.url }}>
-                                                <p style="color:gray">
-                                                    <a style="color:black" href="{{ c.profile.get_absolute_url }}">{{ c.profile }}</a> {{ c.created|timesince }} назад
-                                                </p>
-                                                <div style="color:black" class='mt-5'>{{ c.content }}</div>
-                                                <br>
-                                                {% if c.profile.user == request.user %}
-                                                    <form method="POST" action="{% url 'posts:comment-delete' c.pk %}">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="delete-cmt-btn">Удалить</button>
-                                                    </form>
-                                                {% endif %}
-                                            </div>
-                                        {% endfor %}
+        <div class="ui grid">
+            <div class="eleven wide column" id="post_column">
+                {% if not qs %}<h1 style="color: rgb(205, 144, 58); text-align:center">Пусто(</h1>{% endif %}
+                {% for post in qs %}
+                <div class="ui fluid card">
+                    <div class="content">
+                        <div class="right floated meta">
+                            <div class="ui grid">
+                                <div class="row">
+                                    {% if request.user == post.author.user %}
+                                    <a href="{% url 'posts:post-update' post.pk %}">
+                                        <button class="ui button bwhite-lg ">Изменить</button>
+                                    </a>
+                                    <a href="{% url 'posts:post-delete' post.pk %}">
+                                        <button class="ui button bwhite-lg ">Удалить</button>
+                                    </a>
                                     {% endif %}
                                 </div>
-                                <form action="" method="POST"class='form{{ post.id }} ui fluid form'>
-                                    {% csrf_token %}
-                                    <input type="hidden" name="post_id" value={{ post.id }}>
-                                    {{ c_form.as_p }}
-                                    <button type="submit"
-                                            name="submit_c_form"
-                                            class="ui primary button mt-5 w-full">Опубликовать</button>
-                                </form>
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
-                <div class="five wide column">
-                    <div class="ui segment">
-                        <form action="" method="POST" class='ui form' enctype="multipart/form-data">
+                        <img class="ui avatar image" src={{ post.author.avatar.url }}>
+                        <p style="color:gray">
+                            <a style="color:black" href="{{ post.author.get_absolute_url }}">{{ post.author.user }}</a>
+                            {{ post.created|timesince }} назад
+                        </p>
+                    </div>
+                    <div class="ui fluid image">
+                        {% if post.image %}<img src={{ post.image.url }}>{% endif %}
+                    </div>
+                    <div class="content">
+                        <p>{{ post.content }}</p>
+                        <div style="display: flex; justify-content: right;">
+                            <div class="cmt_btn {{ post.id }} ui button mb-5">
+                                <i class="comment icon"></i>
+                                <p style="display: inline-block;">{{ post.num_comments }}</p>
+                            </div>
+                            <form action="{% url 'posts:switch-like-view' %}" method="POST" class='like-form'
+                                id='{{ post.id }}'>
+                                {% csrf_token %}
+                                <input type="hidden" name="post_id" value={{ post.id }}>
+                                {% if profile not in post.liked.all %}
+                                <button type="submit" class="ui button black like-btn{{ post.id }}">
+                                    <i class="heart icon"></i>
+                                    <p style="display: inline-block;" class="like-count{{ post.id }}">{{
+                                        post.liked.all.count }}</p>
+                                </button>
+                                {% else %}
+                                <button type="submit" class="ui button negative like-btn{{ post.id }}">
+                                    <i class="heart icon"></i>
+                                    <p style="display: inline-block;" class="like-count{{ post.id }}">{{
+                                        post.liked.all.count }}</p>
+                                </button>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <div class="comment-box">
+                            {% if post.comment_set.all %}
+                            {% for c in post.comment_set.all %}
+                            <div class="ui segment mb-5">
+                                <img class="ui avatar image" src={{ c.profile.avatar.url }}>
+                                <p style="color:gray">
+                                    <a style="color:black" href="{{ c.profile.get_absolute_url }}">{{ c.profile }}</a>
+                                    {{ c.created|timesince }} назад
+                                </p>
+                                <div style="color:black" class='mt-5'>{{ c.content }}</div>
+                                <br>
+                                {% if c.profile.user == request.user %}
+                                <form method="POST" action="{% url 'posts:comment-delete' c.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="delete-cmt-btn">Удалить</button>
+                                </form>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        <form action="" method="POST" class='form{{ post.id }} ui fluid form'>
                             {% csrf_token %}
-                            {{ p_form.as_p }}
-                            <button type='submit'
-                                    name="submit_p_form"
-                                    class="ui positive button w-full mt-5">Опубликовать</button>
+                            <input type="hidden" name="post_id" value={{ post.id }}>
+                            {{ c_form.as_p }}
+                            <button type="submit" name="submit_c_form"
+                                class="ui primary button mt-5 w-full">Опубликовать</button>
                         </form>
                     </div>
                 </div>
+                {% endfor %}
             </div>
+            <div class="five wide column">
+                <div class="ui segment">
+                    <form action="" method="POST" class='ui form' enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ p_form.as_p }}
+                        <button type='submit' name="submit_p_form"
+                            class="ui positive button w-full mt-5">Опубликовать</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- <script src="{% static 'get_messages.js' %}" defer></script> -->

@@ -3,6 +3,8 @@
     Приглашения в друзья
 {% endblock title %}
 {% block body %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" -- Custom JS -->
 <body>
   <header class="header" role="banner" style="z-index: 1000000;">
     <h1 class="logo">
@@ -12,7 +14,7 @@
       <nav class="main-nav" role="navigation">
         <ul class="unstyled list-hover-slide">
           <li>
-            <a href="{% url 'profiles:my-profile-view' %}">
+            <a class='avatarka' href="{% url 'profiles:my-profile-view' %}">
               <img src="{{avatar}}" width="100px" height="100px"/>
               <br>
               <br>

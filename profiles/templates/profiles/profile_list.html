@@ -2,6 +2,8 @@
 {% block title %}
     All Profiles
 {% endblock title %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" -- Custom JS -->
 {% block content %}
     {% for profile in profiles %}
         <div class='ui segment'>
