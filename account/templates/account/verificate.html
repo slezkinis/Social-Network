@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
   <title>Подтверждение почты</title>
   <style>
@@ -783,6 +784,7 @@ document.addEventListener("DOMContentLoaded", function () {
   </script>
 </head>
 <body style=" display: flex; justify-content: space-around;">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" -- Custom JS -->
     <header class="header" role="banner" style="z-index: 1000000;">
         <h1 class="logo">
             <a href="/">IvanK</a>
