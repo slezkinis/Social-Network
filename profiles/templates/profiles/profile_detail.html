@@ -144,10 +144,7 @@
                         <form action='{% url 'profiles:accept-invite' %}' method='POST'>
                             {% csrf_token %}
                             <input type='hidden' name='pk' value='{{ profile.pk }}'>
-                            <button style="margin-top:10px;
-                                           width:200px"
-                                    type='submit'
-                                    class='ui positive basic button mb-5 w-big profile_button'>
+                            <button type='submit' class='ui positive basic button mb-5 w-big profile_button'>
                                 <i class='plus square icon'></i>
                                 Принять приглашение
                             </button>
