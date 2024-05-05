@@ -56,7 +56,7 @@
         {% for profile in profiles %}
         <div class="border_2">
           <div style="margin-left: 0.5%; margin-top: 0.3%;  width: 30%; display: flex;;">
-              <img src="{{ profile.avatar.url }}" class="friends_logo">
+              <img style='background-image: url("{{ profile.avatar.url }}"); background-size: cover;' class="friends_logo">
               <div style="margin-left: 2%;">
                   <h2 style="color: rgb(205, 144, 58); display: inline-block;">{{ profile.user }}</h2>
                   <h3 class="description">{{profile.bio}}</h3>
