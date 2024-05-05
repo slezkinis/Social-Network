@@ -3,6 +3,9 @@ body {
     font: 1em/1.5 "DM Sans", sans-serif;
     width: 100%
 }
+.description {
+    max-width: 250px
+}
 
 .profile_button {
     margin-top: 3% !important
