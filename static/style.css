@@ -7,7 +7,9 @@ body {
 .profile_button {
     margin-top: 3% !important
 }
-
+.messenger_logo {
+    width: 21%
+}
 .friends_logo {
     min-width: 23%
 }
