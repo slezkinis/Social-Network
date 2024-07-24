@@ -24,7 +24,7 @@ from .views_utils import (
 @login_required(login_url='/')
 def post_comment_create_and_list_view(request):
     """
-    Shows request's user friends.
+    Shows posts
     View url: /posts/
     """
     if not request.user.is_authenticated:

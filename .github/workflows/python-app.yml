@@ -54,6 +54,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=8 --max-line-length=100 --statistics
     - name: Test with pytest
       run: |
+        export DJANGO_SETTINGS_MODULE=pybook.settings.base
         pytest
       env:
         # Setup needed enviroment variables for pybook/settings/base.py
